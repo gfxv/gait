@@ -1,34 +1,29 @@
 package main
 
 import (
-	"fmt"
-	"github.com/urfave/cli/v2"
+	"gait/internal/app"
+	"gait/internal/model"
+	"github.com/joho/godotenv"
+
 	"log"
 	"os"
 )
 
+const envPath = "local.env"
+const modelName = "gemini-1.5-flash"
+
 func main() {
 
-	app := &cli.App{
-		Name: "gait",
-		Action: func(*cli.Context) error {
-			fmt.Println("Hello friend!!!")
-			return nil
-		},
-		Commands: []*cli.Command{
-			{
-				Name:    "add",
-				Aliases: []string{"a"},
-				Usage:   "add a task to the list",
-				Action: func(cCtx *cli.Context) error {
-					fmt.Println("added task: ", cCtx.Args().First())
-					return nil
-				},
-			},
-		},
-	}
-
-	if err := app.Run(os.Args); err != nil {
+	if err := godotenv.Load(envPath); err != nil {
 		log.Fatal(err)
 	}
+
+	apiKey := os.Getenv("GAIT_API_KEY")
+	if len(apiKey) == 0 {
+		log.Fatal("No API key found")
+	}
+
+	gemini := model.NewGeminiModel(apiKey, modelName)
+	cli := app.NewApp(gemini)
+	cli.MustRun()
 }
