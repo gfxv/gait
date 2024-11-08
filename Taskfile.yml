@@ -23,5 +23,5 @@ tasks:
     desc: "Run application"
     deps: [build]
     cmds:
-      - "{{.DEST}}/{{.OUT}}"
+      - "{{.DEST}}/{{.OUT}} {{.CLI_ARGS}}"
     silent: true
