@@ -1,0 +1,20 @@
+version: "3"
+
+vars:
+  DEST: ./bin
+  OUT: gait
+
+tasks:
+  build:
+    desc: "Build application into binary"
+    cmds:
+      - go build -o {{.DEST}}/{{.OUT}}
+    silent: true
+
+  run:
+    desc: "Run application"
+    deps:
+      - build
+    cmds:
+      - "{{.DEST}}/{{.OUT}}"
+    silent: true
