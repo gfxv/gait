@@ -8,14 +8,8 @@ tasks:
   default:
     deps: [run]
 
-  clean:
-    desc: "Removes the {{.DEST}} directory"
-    cmd: rm -r {{.DEST}}/
-    silent: true
-
   build:
     desc: "Build application into binary"
-    deps: [clean]
     cmd: go build -o {{.DEST}}/{{.OUT}}
     silent: true
 
