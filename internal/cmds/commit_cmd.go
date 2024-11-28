@@ -1,15 +1,15 @@
-package cmd
+package cmds
 
 import (
 	"fmt"
-	"gait/internal"
+	"gait/internal/model"
 	"github.com/go-git/go-git/v5"
 	"github.com/urfave/cli/v2"
 	"os"
 	"os/exec"
 )
 
-func CommitCmd(model *internal.Model) *cli.Command {
+func CommitCmd(model *model.Model) *cli.Command {
 	return &cli.Command{
 		Name:    "commit",
 		Aliases: []string{"c"},
@@ -43,6 +43,10 @@ func CommitCmd(model *internal.Model) *cli.Command {
 			diff, err := exec.Command("git", "diff", "--staged").Output()
 			if err != nil {
 				return fmt.Errorf("failed to get diff, %w", err)
+			}
+
+			if len(diff) == 0 {
+				return fmt.Errorf("no staged files found")
 			}
 
 			response, err := (*model).GetSuggestion(string(diff))

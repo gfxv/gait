@@ -1,4 +1,4 @@
-package cmd
+package cmds
 
 import (
 	"fmt"
@@ -10,9 +10,9 @@ func NewHandler(commands ...*cli.Command) *cli.App {
 		EnableBashCompletion: true,
 
 		Name:  "gait",
-		Usage: "",
+		Usage: "TODO: write usage part",
 		Action: func(*cli.Context) error {
-			fmt.Println("Hello friend!!!")
+			fmt.Println("hmmm...")
 			return nil
 		},
 		Commands: commands,
