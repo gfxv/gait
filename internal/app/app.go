@@ -2,18 +2,21 @@ package app
 
 import (
 	"gait/internal/cmd"
-	"gait/internal/model"
 	"github.com/urfave/cli/v2"
 	"log"
 	"os"
 )
 
+type Model interface {
+	GetSuggestion(string) (string, error)
+}
+
 type App struct {
-	model model.Model
+	model Model
 	cli   *cli.App
 }
 
-func NewApp(model model.Model) *App {
+func NewApp(model Model) *App {
 	return &App{
 		model: model,
 		cli:   cmd.NewHandler(cmd.CommitCmd(&model)),
