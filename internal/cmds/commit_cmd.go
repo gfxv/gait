@@ -3,17 +3,19 @@ package cmds
 import (
 	"fmt"
 	"gait/internal/model"
-	"github.com/go-git/go-git/v5"
-	"github.com/urfave/cli/v2"
 	"os"
 	"os/exec"
+	"strings"
+
+	"github.com/go-git/go-git/v5"
+	"github.com/urfave/cli/v2"
 )
 
 func CommitCmd(model *model.Model) *cli.Command {
 	return &cli.Command{
 		Name:    "commit",
 		Aliases: []string{"c"},
-		Usage:   "creates a commit suggested message if acceptable",
+		Usage:   "creates a commit with suggested message if acceptable",
 		Action: func(cCtx *cli.Context) error {
 
 			dir, err := os.Getwd()
@@ -55,6 +57,24 @@ func CommitCmd(model *model.Model) *cli.Command {
 			}
 
 			fmt.Println(response)
+			fmt.Println("Is this commit message acceptable? (y/n)")
+			var input string
+			if _, err = fmt.Scanf("%s", &input); err != nil {
+				return fmt.Errorf("Failed to read input: ", err)
+			}
+
+			if strings.TrimSpace(strings.ToLower(input)) != "y" {
+				return fmt.Errorf("Commit canceled.")
+			}
+
+			command := exec.Command("git", "commit", "-em", response)
+			command.Stdin = os.Stdin
+			command.Stdout = os.Stdout
+
+			if err = command.Run(); err != nil {
+				return fmt.Errorf("failed to start proc:", err)
+			}
+
 			return nil
 		},
 	}
