@@ -43,7 +43,7 @@ func (g *GeminiModel) GetSuggestion(diff string) (string, error) {
 	defer client.Close()
 
 	model := client.GenerativeModel(g.model)
-	model.SystemInstruction = genai.NewUserContent(genai.Text(PROMPT))
+	model.SystemInstruction = genai.NewUserContent(genai.Text(prompt))
 
 	resp, err := model.GenerateContent(ctx, genai.Text(diff))
 	if err != nil {
