@@ -1,7 +1,7 @@
 package app
 
 import (
-	"gait/internal/cmds"
+	"gait/internal/commands"
 	"gait/internal/model"
 	"github.com/urfave/cli/v2"
 	"log"
