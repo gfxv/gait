@@ -6,7 +6,7 @@ vars:
 
 tasks:
   default:
-    deps: [run]
+    deps: [build]
 
   build:
     desc: "Build application into binary"
