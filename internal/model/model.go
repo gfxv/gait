@@ -17,3 +17,7 @@ func LoadPrompt(path string) error {
 	prompt = string(data)
 	return nil
 }
+
+func SetPrompt(p string) {
+	prompt = p
+}

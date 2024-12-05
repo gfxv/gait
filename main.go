@@ -1,12 +1,11 @@
 package main
 
 import (
-	"flag"
 	"gait/internal/app"
 	"gait/internal/model"
 
+	_ "embed"
 	"github.com/joho/godotenv"
-
 	"log"
 	"os"
 )
@@ -14,13 +13,12 @@ import (
 const envPath = "local.env"
 const modelName = "gemini-1.5-flash"
 
-var promptPath string
+//go:embed prompt
+var prompt string
 
 func init() {
-	flag.StringVar(&promptPath, "prompt", "", "Path to the prompt file")
-	flag.Parse()
 
-	model.LoadPrompt(promptPath)
+	model.SetPrompt(prompt)
 }
 
 func main() {
