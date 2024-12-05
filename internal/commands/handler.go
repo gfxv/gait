@@ -10,9 +10,10 @@ func NewHandler(commands ...*cli.Command) *cli.App {
 		EnableBashCompletion: true,
 
 		Name:  "gait",
-		Usage: "TODO: write usage part",
+		Usage: "Use 'gait c' or 'gait commit' to generate commit messsage based on staged files",
 		Action: func(*cli.Context) error {
-			fmt.Println("hmmm...")
+			// TODO: print proper help
+			fmt.Println("Use 'gait c' or 'gait commit' to generate commit messsage based on staged files")
 			return nil
 		},
 		Commands: commands,
