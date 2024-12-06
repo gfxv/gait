@@ -5,7 +5,6 @@ import (
 	"gait/internal/model"
 
 	_ "embed"
-	"github.com/joho/godotenv"
 	"log"
 	"os"
 )
@@ -22,10 +21,6 @@ func init() {
 }
 
 func main() {
-
-	if err := godotenv.Load(envPath); err != nil {
-		log.Fatal(err)
-	}
 
 	apiKey := os.Getenv("GAIT_API_KEY")
 	if len(apiKey) == 0 {
