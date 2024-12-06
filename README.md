@@ -20,9 +20,17 @@ To use **gait**, you need to prorivde an API key using the `GAIT_API_KEY` enviro
 
 2. Set the Environment Variable
 
-Add the following line to your shell configuration file (`~/.bashrc`, `~/.zshrc`, etc.):
+Write you API key to env file like so:
 ```sh
-export GAIT_API_KEY=<YOUR_API_KEY>
+echo "GAIT_API_KEY=<YOUR_API_KEY>" > <PATH_TO_FILE>/local.env
+```
+
+Add the following line to your shell configuration file (`~/.bashrc`, `~/.zshrc`, etc.) to load env variable:
+```sh
+# example for zshrc
+if [ -f <PATH_TO_FILE>/local.env ]; then
+  export $(cat <PATH_TO_FILE>/local.env | xargs)
+fi
 ```
 
 3. Add **gait** to your PATH
