@@ -16,7 +16,10 @@ type App struct {
 func NewApp(model model.Model) *App {
 	return &App{
 		model: model,
-		cli:   cmds.NewHandler(cmds.CommitCmd(&model)),
+		cli: cmds.NewHandler(
+			cmds.CommitCmd(&model),
+			cmds.UnstageCmd(&model),
+		),
 	}
 }
 
