@@ -7,7 +7,6 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/go-git/go-git/v5"
 	"github.com/urfave/cli/v2"
 )
 
@@ -17,29 +16,13 @@ func CommitCmd(model *model.Model) *cli.Command {
 		Aliases: []string{"c"},
 		Usage:   "creates a commit with suggested message if acceptable",
 		Action: func(cCtx *cli.Context) error {
-
 			dir, err := os.Getwd()
 			if err != nil {
 				return fmt.Errorf("failed to get current directory: %w", err)
 			}
 
-			repo, err := git.PlainOpen(dir)
-			if err != nil {
-				return fmt.Errorf("failed to open repository: %w", err)
-			}
-
-			wt, err := repo.Worktree()
-			if err != nil {
-				return fmt.Errorf("failed to get worktree: %w", err)
-			}
-
-			status, err := wt.Status()
-			if err != nil {
-				return fmt.Errorf("failed to get git status, %w", err)
-			}
-
-			if status.IsClean() {
-				return fmt.Errorf("git worktree is clean")
+			if validateGitRepo(dir); err != nil {
+				return fmt.Errorf("commit error: %w", err)
 			}
 
 			diff, err := exec.Command("git", "diff", "--staged").Output()
